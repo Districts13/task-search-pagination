@@ -1,0 +1,89 @@
+body {
+    margin: 0;
+    height: 2500px;
+    padding: 85px 25px 0 25px;
+    background-color: #ede4e4;
+}
+
+.header {
+    background-color: deepskyblue;
+    padding: 0 16px;
+    height: 85px;
+    margin: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 200;
+    display: flex;
+    flex-direction: row;
+}
+
+.logo-search {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    margin: 0 700px 0 200px;
+}
+.search-bar {
+    flex: 1;
+    height: 22px;
+    max-width: 450px;
+    min-width: 0;
+    padding: 5px 0 5px 10px;
+    margin-left: 15px;
+    border: none;
+    font-size: 16px;
+    box-shadow: inset 1px 1px 4px rgba(0, 0, 0, 0.25);
+}
+.button-search {
+    margin-left: 10px;
+    height: 35px;
+    width: 35px;
+    background-color: deepskyblue;
+    border: none;
+    border-radius: 100px;
+    cursor: pointer;
+}
+.button-search:hover {
+    background-color: #1087ae;
+}
+.button-search:active {
+    background-color: #36ceff;
+}
+
+/*
+.icon-search {
+    height: 1000px;
+    display: grid;
+    align-items: center;
+    justify-content: center;
+}
+ */
+
+
+.whole-profile {
+    display: flex;
+    padding: 20px;
+}
+.whole-profile div {
+    border: deepskyblue solid 1px;
+}
+
+.profile-info{
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+}
+.profile-avatar {
+    height: 400px;
+}
+.profile-name-username, .profile-follows {
+    height: 100px;
+}
+
+.profile-repositories {
+    height: 600px;
+    flex: 1;
+}

@@ -121,10 +121,13 @@ document.body.append(p);
 
 async function showUser() {
     // запрашиваем JSON с данными пользователей
-    let responseUsers = await fetch('https://jsonplaceholder.typicode.com/users');
+    let responseApi = await fetch('https://api.github.com/');
+    let api = await responseApi.json();
+    let responseUsers = await fetch('https://api.github.com/users');
     let users = await responseUsers.json();
-    let user = users[0].username;
-    let emailUser = users[0].email;
+
+
+
 
     let responsePosts = await fetch('https://jsonplaceholder.typicode.com/posts');
     let posts = await responsePosts.json();
@@ -132,7 +135,7 @@ async function showUser() {
     let postBody = posts[0].body;
 
     // отображаем данные
-    let p = document.createElement('p');
+    // let p = document.createElement('p');
     // p.className = "user-example";
     // p.textContent = `Username: ${user}, email: ${emailUser}`;
     // document.body.append(p);
