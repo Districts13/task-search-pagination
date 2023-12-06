@@ -5,6 +5,7 @@
     <title>Задание</title>
     <script src="index.js"></script>
     <link rel="stylesheet" href="index.css">
+    <link type="image/png" sizes="50x50" rel="icon" href="https://img.icons8.com/external-those-icons-fill-those-icons/38/external-GitHub-social-media-those-icons-fill-those-icons.png">
 </head>
 <body>
     <!-- Верхняя часть сайта   -->
@@ -16,8 +17,8 @@
                 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82
                 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"></path>
             </svg>
-            <input class="search-bar" type="text" placeholder="Введите юзернейм пользователя Гитхаб" aria-label="">
-            <button class="button-search" title="Введите запрос">
+            <input id="search-field" class="search-bar" type="text" placeholder="Введите юзернейм пользователя Гитхаб" aria-label="">
+            <button class="button-search" title="Введите запрос" onclick="showUser()">
                 <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="26" height="26" viewBox="0,0,256,256"
                      style="fill:#a7a7a7;">
                     <g fill="#FFFFFF" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(10.66667,10.66667)"><path d="M9,2c-3.85415,0 -7,3.14585 -7,7c0,3.85415 3.14585,7 7,7c1.748,0 3.34501,-0.65198 4.57422,-1.71875l0.42578,0.42578v1.29297l6,6l2,-2l-6,-6h-1.29297l-0.42578,-0.42578c1.06677,-1.22921 1.71875,-2.82622 1.71875,-4.57422c0,-3.85415 -3.14585,-7 -7,-7zM9,4c2.77327,0 5,2.22673 5,5c0,2.77327 -2.22673,5 -5,5c-2.77327,0 -5,-2.22673 -5,-5c0,-2.77327 2.22673,-5 5,-5z"></path></g></g>
@@ -30,21 +31,52 @@
     <div class="whole-profile">  <!-- Левая часть с отображением инфы профиля   -->
         <div class="profile-info">
             <div class="profile-avatar">
-            
+                <img src="" id="userAvatar" alt="">
             </div>
             <div class="profile-name-username">
-            
+                <h2 id="userOnPage"></h2>
+                <h4 id="nameUserOnPage"></h4>
             </div>
             <div class="profile-follows">
-            
+                <div class="followersAndIcon">
+                    <img width="20" height="20" src="https://img.icons8.com/glyph-neue/32/737373/group--v1.png" alt="group--v1">
+                    <p id="followersCount"></p>
+                    <p>Followers</p>
+                </div>
+                <div class="followingAndIcon">
+                    <img width="20" height="20" src="https://img.icons8.com/external-anggara-glyph-anggara-putra/32/737373/external-following-social-media-interface-anggara-glyph-anggara-putra.png" alt=""/>
+                    <p id="followingCount"></p>
+                    <p>Following</p>
+                </div>
             </div>
         </div>
         
-        <div class="profile-repositories">  <!-- Правая часть с отображением репозиториев   -->
-        
+        <!-- Правая часть с отображением репозиториев   -->
+        <div class="profile-repositories">
+            <div class="countRepos">
+                <h1 class="countRepos">Repositories</h1>
+                <h1 class="countRepos">(<p id="countRepos"></p>)</h1>
+            </div>
+            <div class="paginationBlock">
+                <ul id="pagination" class="pagination">
+                    <li><a href="#" onclick="prevPage()">«</a></li>
+                    <li><a href="#" onclick="changePage(1)">1</a></li>
+                    <li><a href="#" onclick="changePage(2)">2</a></li>
+                    <li><a href="#" onclick="changePage(3)">3</a></li>
+                    <li><a href="#" onclick="changePage(4)">4</a></li>
+                    <li><a href="#" onclick="nextPage()">»</a></li>
+                </ul>
+            
+            </div>
         </div>
     </div>
     
+
+</body>
+</html>
+
+
+
 <!--    <div class="icon-search">
         <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0,0,256,256"
              style="fill:#a7a7a7;">
@@ -52,5 +84,3 @@
         </svg>
     </div>
 -->
-</body>
-</html>

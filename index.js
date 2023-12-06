@@ -1,158 +1,141 @@
-// Тестовое от рафика
-// <!DOCTYPE html>
-// <html lang="en">
-// <head>
-//   <meta charset="UTF-8">
-//   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-//   <title>Fetch API Example</title>
-// </head>
-// <body>
-//
-// <!-- Элемент, в котором будут отображаться данные -->
-// <div id="data-container"></div>
-//
-// <script>
-// // Шаг 2: Написание JavaScript кода
-// document.addEventListener('DOMContentLoaded', fetchData);
-//
-// function fetchData() {
-//   // Шаг 3: Выполнение запроса с использованием Fetch API
-//   fetch('https://jsonplaceholder.typicode.com/posts/1')
-//     .then(response => {
-//       if (!response.ok) {
-//         throw new Error(Network response was not ok: ${response.status});
-//       }
-//       return response.json(); // Преобразование ответа в JSON
-//     })
-//     .then(data => {
-//       // Шаг 4: Обновление HTML с полученными данными
-//       updateHTML(data);
-//     })
-//     .catch(error => {
-//       console.error('Error fetching data:', error);
-//     });
-// }
-//
-// function updateHTML(data) {
-//   // Шаг 1: Создание элементов HTML и Шаг 4: Обновление HTML
-//   const dataContainer = document.getElementById('data-container');
-//
-//   // Пример: отображение заголовка и тела поста
-//   dataContainer.innerHTML = `
-//     <h2>${data.title}</h2>
-//     <p>${data.body}</p>
-//   `;
-// }
-// </script>
-//
-// </body>
-// </html>
 
-// async тестовое от Рафика
-// async function fetchData(url, method = 'GET', headers = {}) {
-//   try {
-//     const response = await fetch(url, { method, headers });
-//
-//     if (!response.ok) {
-//       throw new Error(`Network response was not ok: ${response.status}`);
-//     }
-//
-//     const data = await response.json();
-//
-//     return data;
-//   } catch (error) {
-//     console.error('Error fetching data:', error);
-//     throw error;
-//   }
-// }
-//
-// const apiUrl = 'https://jsonplaceholder.typicode.com/posts/1';
-// fetchData(apiUrl)
-//   .then(data => {
-//     updateHTML(data);
-//   })
-//   .catch(error => {
-//
-//     console.error('Failed to fetch data:', error);
-//   });
-// function updateHTML(data) {
-//     // Шаг 1: Создание элементов HTML и Шаг 4: Обновление HTML
-//     const dataContainer = document.getElementById('data-container');
-//     // Пример: отображение заголовка и тела поста
-//     dataContainer.innerHTML = `<h2>${data.title}</h2><p>${data.body}</p>`;
-// }
-// document.getElementById('fetch-button').addEventListener('click', () => {
-//   const apiUrl = 'https://jsonplaceholder.typicode.com/posts/1';
-//
-//   // Вызов функции по нажатию кнопки
-//   fetchData(apiUrl)
-//       .then(data => {
-//         updateHTML(data);
-//       })
-//       .catch(error => {
-//         console.error('Failed to fetch data:', error);
-//       });
-// });
-
-
-// fetch('https://api.github.com/')
-//     .then(response => response.json())
-//     .then(json => console.log(json))
-
-// async function getResponse(){
-//     let response = fetch('https://api.github.com/')
-//     console.log(response)
-// }
-// getResponse()
-
-/* Отображаем данные в параграфе
-
-let p = document.createElement('p');
-p.className = "user-example";
-p.textContent = `Username: ${user}, email: ${emailUser}`;
-document.body.append(p);
-
-ИЛИ
-    // const dataContainer = document.getElementById('data-container');
-    // // Пример: отображение заголовка и тела поста
-    // dataContainer.innerHTML = `<p>Username: ${user}, email: ${emailUser}</p>`;
-
- */
+let userName;
+let userApiUrl = "https://api.github.com/users/{userName}";
+let repositoriesApiUrl = "https://api.github.com/users/{userName}/repos{?type,page,per_page,sort}";
 
 async function showUser() {
-    // запрашиваем JSON с данными пользователей
-    let responseApi = await fetch('https://api.github.com/');
-    let api = await responseApi.json();
-    let responseUsers = await fetch('https://api.github.com/users');
-    let users = await responseUsers.json();
+
+    userName = document.getElementById('search-field').value;
+
+    let responseUsers = await fetch(userApiUrl.replace("{userName}", userName));
+    let user = await responseUsers.json();
+
+    let avatarImg = document.getElementById("userAvatar");
+    avatarImg.setAttribute("src", user.avatar_url)
+
+    let userOnPage = document.getElementById("userOnPage");
+    userOnPage.textContent = user.login;
+
+    let nameUserOnPage = document.getElementById("nameUserOnPage");
+    nameUserOnPage.textContent = user.name;
+
+    let followersCount = document.getElementById("followersCount");
+    followersCount.textContent = user.followers;
+
+    let followingCount = document.getElementById("followingCount");
+    followingCount.textContent = user.following;
+
+    let countRepos = document.getElementById("countRepos");
+    countRepos.textContent = user.public_repos;
 
 
 
 
-    let responsePosts = await fetch('https://jsonplaceholder.typicode.com/posts');
-    let posts = await responsePosts.json();
-    let postTitle = posts[0].title;
-    let postBody = posts[0].body;
 
-    // отображаем данные
-    // let p = document.createElement('p');
-    // p.className = "user-example";
-    // p.textContent = `Username: ${user}, email: ${emailUser}`;
-    // document.body.append(p);
-    // let h3 = document.createElement('h3');
-    // h3.className = 'post-example';
-    // h3.textContent = `${postTitle}`;
-    // document.body.append(h3);
-    const dataContainer = document.getElementById('data-container');
-    // Пример: отображение заголовка и тела поста
-    dataContainer.innerHTML = `<p>Username: ${user}, email: ${emailUser}</p><h3>${postTitle}</h3><p>${postBody}</p>`;
+    // let responseRepositories = await fetch(repositoriesApiUrl.replace("{userName}", userName))
 
-
-    // запрашиваем информацию о пользователях
-    // let githubResponse = await fetch(`https://api.github.com/users`);
-    // let githubUser = await githubResponse.json();
+    console.log(user);
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Пагинация
+let currentPage = 1;
+
+function changePage(page) {
+    // Здесь вы можете добавить логику для загрузки данных соответствующей страницы
+
+    // Просто для примера увеличим номер текущей страницы
+    currentPage = page;
+
+    // Здесь может быть также логика обновления интерфейса
+    updateUI();
+}
+
+function prevPage() {
+    if (currentPage > 1) {
+        changePage(currentPage - 1);
+    }
+}
+
+function nextPage() {
+    // Здесь вы можете добавить логику для определения общего количества страниц
+    const totalPages = 5;
+
+    if (currentPage < totalPages) {
+        changePage(currentPage + 1);
+    }
+}
+
+function updateUI() {
+    // Здесь можете обновить визуальное представление пагинации
+    console.log('Page changed to', currentPage);
+}
+ */
+
+
+
+
+function moveNextRepos() {
+
+}
+
+function moveBackRepos () {
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// отображаем данные
+// let p = document.createElement('p');
+// p.className = "user-example";
+// p.textContent = `Username: ${user}, email: ${emailUser}`;
+// document.body.append(p);
+// let h3 = document.createElement('h3');
+// h3.className = 'post-example';
+// h3.textContent = `${postTitle}`;
+// document.body.append(h3);
+// const dataContainer = document.getElementById('data-container');
+// // Пример: отображение заголовка и тела поста
+// dataContainer.innerHTML = `<p>Username: ${user}, email: ${emailUser}</p><h3>${postTitle}</h3><p>${postBody}</p>`;
+
+
+// запрашиваем информацию о пользователях
+// let githubResponse = await fetch(`https://api.github.com/users`);
+// let githubUser = await githubResponse.json();
 // function updateHTML(data) {
 //     // Шаг 1: Создание элементов HTML и Шаг 4: Обновление HTML
 //     const dataContainer = document.getElementById('data-container');
