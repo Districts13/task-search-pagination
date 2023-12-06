@@ -7,6 +7,11 @@ async function showUser() {
 
     userName = document.getElementById('search-field').value;
 
+    if (!(userName.length===0)) {
+        const hidden = document.querySelector('#bottomSite');
+        hidden.setAttribute('hidden', '');
+    }
+
     let responseUsers = await fetch(userApiUrl.replace("{userName}", userName));
     let user = await responseUsers.json();
 
@@ -20,8 +25,7 @@ async function showUser() {
     nameUserOnPage.textContent = user.name;
 
     let followersCount = document.getElementById("followersCount");
-    followersCount.textContent = user.followers;
-
+    followersCount.textContent = (user.followers/1000).toFixed(1) +'k';
     let followingCount = document.getElementById("followingCount");
     followingCount.textContent = user.following;
 
@@ -34,16 +38,24 @@ async function showUser() {
 
     // let responseRepositories = await fetch(repositoriesApiUrl.replace("{userName}", userName))
 
-    console.log(user);
+    // console.log(user);
 }
 
+// const form = document.querySelector('form');
+// form.addEventListener('submit', event => {
+//     // данный обработчик вызовется и при нажатии на кнопку, и при нажатии enter (когда фокус в <input>)
+//     showUser()
+// });
 
 
 
 
 
 
-
+// if (userName==='') {
+//     const hidden = document.querySelector('#bottomSite');
+//     hidden.setAttribute('hidden', '');
+// }
 
 
 
@@ -90,13 +102,13 @@ function updateUI() {
 
 
 
-function moveNextRepos() {
-
-}
-
-function moveBackRepos () {
-
-}
+// function moveNextRepos() {
+//
+// }
+//
+// function moveBackRepos () {
+//
+// }
 
 
 
