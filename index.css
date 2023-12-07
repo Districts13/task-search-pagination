@@ -3,7 +3,7 @@ body {
     margin: 0;
     height: 2500px;
     padding: 85px 25px 0 25px;
-    background-color: #ede4e4;
+    background-color: #fff9f9;
 }
 
 #userAvatar {
@@ -124,6 +124,15 @@ body {
 #countRepos {
     display: inline-block;
 }
+
+.reposNameReadme {
+    background-color: #ffffff;
+}
+.reposName {
+    color: deepskyblue;
+}
+
+
 
 .paginationBlock {
     position: absolute;

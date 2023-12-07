@@ -26,16 +26,25 @@ async function showUser() {
         let nameUserOnPage = document.getElementById("nameUserOnPage");
         nameUserOnPage.textContent = user.name;
 
-        // Добавление на страницу строки "Репозитории" и количество репозиториев
+        // Добавление кол-ва подписчиков и подписок на страницу
         let followersCount = document.getElementById("followersCount");
         followersCount.textContent = (user.followers/1000).toFixed(1) +'k';
         let followingCount = document.getElementById("followingCount");
         followingCount.textContent = user.following;
 
+        // Добавление на страницу строки "Репозитории" и количество репозиториев
         let countRepos = document.getElementById("countRepos");
         countRepos.textContent = user.public_repos;
 
-        
+        // Получаем данные репозиториев юзера и добавляем их на страницу
+        if (user.public_repos>0) {
+            let responseRepositories = await fetch(repositoriesApiUrl.replace("{userName}", userName))
+            let Repositories = await responseRepositories.json();
+            let reposContainer = document.getElementById('reposContainer');
+            for (let i = 0; i < Repositories.length; i++) {
+                reposContainer.innerHTML = `<div class="reposNameReadme"><h2 class="reposName">${Repositories[i].name}</h2><h4>${Repositories[i].description}</h4></div>`;
+            }
+        }
 
 
 
@@ -46,8 +55,60 @@ async function showUser() {
 
 
 
-    // console.log(user);
+    // console.log('https://api.github.com/repos/Districts13/First-lessons');
 }
+
+
+
+
+
+
+// {repositories.map(repo => (
+//     <li className='repo-item' key={repo.id}>
+//         <a
+//             href={repo.html_url}
+//             className='repo-item__link'
+//             target='_blank'
+//             rel='noopener noreferrer'
+//         >
+//             {repo.name}
+//         </a>
+//         <p className='repo-item__description'>
+//             {repo.description}
+//         </p>
+//     </li>
+// ))}
+
+// const repoUrl = 'https://api.github.com/repos/owner/repository';
+
+// fetch(repoUrl)
+//     .then(response => response.json())
+//     .then(data => {
+//         const repoNameElement = document.getElementById('repoName');
+//         const repoDescriptionElement = document.getElementById('repoDescription');
+
+// repoNameElement.textContent = Repository Name: `${data.name}`;
+// repoDescriptionElement.textContent = Repository Description: `${data.description}`
+// .catch(error => console.error('Error fetching repository info:', error));
+
+
+/*
+let responseRepositories = await fetch(repositoriesApiUrl.replace("{userName}", userName))
+let Repositories = await responseRepositories.json();
+
+let reposContainer = document.getElementById('reposContainer');
+reposContainer.innerHTML = `<div class="reposNameReadme"><h2 class="reposName">${Repositories.name}</h2><h4>${Repositories.description}</h4></div>`;
+ */
+
+
+
+
+
+
+
+
+
+
 
 // const form = document.querySelector('form');
 // form.addEventListener('submit', event => {
@@ -56,21 +117,10 @@ async function showUser() {
 // });
 
 
-
-
-
-
 // if (userName==='') {
 //     const hidden = document.querySelector('#bottomSite');
 //     hidden.setAttribute('hidden', '');
 // }
-
-
-
-
-
-
-
 
 
 /* Пагинация
@@ -107,9 +157,6 @@ function updateUI() {
 }
  */
 
-
-
-
 // function moveNextRepos() {
 //
 // }
@@ -117,24 +164,6 @@ function updateUI() {
 // function moveBackRepos () {
 //
 // }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -151,8 +180,8 @@ function updateUI() {
 // const dataContainer = document.getElementById('data-container');
 // // Пример: отображение заголовка и тела поста
 // dataContainer.innerHTML = `<p>Username: ${user}, email: ${emailUser}</p><h3>${postTitle}</h3><p>${postBody}</p>`;
-
-
+//
+//
 // запрашиваем информацию о пользователях
 // let githubResponse = await fetch(`https://api.github.com/users`);
 // let githubUser = await githubResponse.json();
