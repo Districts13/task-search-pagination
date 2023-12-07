@@ -1,42 +1,50 @@
 
 let userName;
 let userApiUrl = "https://api.github.com/users/{userName}";
-let repositoriesApiUrl = "https://api.github.com/users/{userName}/repos{?type,page,per_page,sort}";
+let repositoriesApiUrl = "https://api.github.com/users/{userName}/repos";
 
 async function showUser() {
 
     userName = document.getElementById('search-field').value;
+    const hidden = document.querySelector('#bottomSite');
 
     if (!(userName.length===0)) {
-        const hidden = document.querySelector('#bottomSite');
         hidden.setAttribute('hidden', '');
+
+        // Получаем данные из апи по конкретному юзеру
+        let responseUsers = await fetch(userApiUrl.replace("{userName}", userName));
+        let user = await responseUsers.json();
+
+        // Добавление аватарки на страницу
+        let avatarImg = document.getElementById("userAvatar");
+        avatarImg.setAttribute("src", user.avatar_url)
+
+        // Добавление логина и имени на страницу
+        let userOnPage = document.getElementById("userOnPage");
+        userOnPage.textContent = user.login;
+
+        let nameUserOnPage = document.getElementById("nameUserOnPage");
+        nameUserOnPage.textContent = user.name;
+
+        // Добавление на страницу строки "Репозитории" и количество репозиториев
+        let followersCount = document.getElementById("followersCount");
+        followersCount.textContent = (user.followers/1000).toFixed(1) +'k';
+        let followingCount = document.getElementById("followingCount");
+        followingCount.textContent = user.following;
+
+        let countRepos = document.getElementById("countRepos");
+        countRepos.textContent = user.public_repos;
+
+        
+
+
+
+    } else {
+        return hidden.setAttribute('hidden', 'until-found');
     }
 
-    let responseUsers = await fetch(userApiUrl.replace("{userName}", userName));
-    let user = await responseUsers.json();
-
-    let avatarImg = document.getElementById("userAvatar");
-    avatarImg.setAttribute("src", user.avatar_url)
-
-    let userOnPage = document.getElementById("userOnPage");
-    userOnPage.textContent = user.login;
-
-    let nameUserOnPage = document.getElementById("nameUserOnPage");
-    nameUserOnPage.textContent = user.name;
-
-    let followersCount = document.getElementById("followersCount");
-    followersCount.textContent = (user.followers/1000).toFixed(1) +'k';
-    let followingCount = document.getElementById("followingCount");
-    followingCount.textContent = user.following;
-
-    let countRepos = document.getElementById("countRepos");
-    countRepos.textContent = user.public_repos;
 
 
-
-
-
-    // let responseRepositories = await fetch(repositoriesApiUrl.replace("{userName}", userName))
 
     // console.log(user);
 }
