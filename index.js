@@ -1,18 +1,20 @@
 
-let userName;
-let userApiUrl = "https://api.github.com/users/{userName}";
-let repositoriesApiUrl = "https://api.github.com/users/{userName}/repos";
-
 async function showUser() {
 
+    let userName;
     userName = document.getElementById('search-field').value;
     const hidden = document.querySelector('#bottomSite');
+    let userApiUrl = `https://api.github.com/users/${userName}`;
+    let currentPage = 1;
+    const perPage = 4;
+    let repositoriesApiUrl = `https://api.github.com/users/${userName}/repos?page=${currentPage}&per_page=${perPage}`;
+
 
     if (!(userName.length===0)) {
         hidden.setAttribute('hidden', '');
 
         // Получаем данные из апи по конкретному юзеру
-        let responseUsers = await fetch(userApiUrl.replace("{userName}", userName));
+        let responseUsers = await fetch(userApiUrl);
         let user = await responseUsers.json();
 
         // Добавление аватарки на страницу
@@ -38,11 +40,11 @@ async function showUser() {
 
         // Получаем данные репозиториев юзера и добавляем их на страницу
         if (user.public_repos>0) {
-            let responseRepositories = await fetch(repositoriesApiUrl.replace("{userName}", userName))
+            let responseRepositories = await fetch(repositoriesApiUrl)
             let Repositories = await responseRepositories.json();
             let reposContainer = document.getElementById('reposContainer');
             for (let i = 0; i < Repositories.length; i++) {
-                reposContainer.innerHTML = `<div class="reposNameReadme"><h2 class="reposName">${Repositories[i].name}</h2><h4>${Repositories[i].description}</h4></div>`;
+                reposContainer.innerHTML = `<div class="reposNameReadme"><h2 class="reposName">${Repositories[i].name}</h2><h4 class="reposReadme">${Repositories[i].description}</h4></div>`;
             }
         }
 
